@@ -1,5 +1,3 @@
-.SILENT:
-
 SRC	= 	ft_isalpha.c	\
 		ft_isdigit.c	\
 		ft_isalnum.c	\
@@ -39,7 +37,9 @@ SRC	= 	ft_isalpha.c	\
 		render_num.c	\
 		render_arg.c	\
 		print_num.c		\
-		utils.c
+		utils.c			\
+		get_next_line.c	\
+		get_next_line_utils.c
 
 OBJS	= ${SRC:.c=.o}
 
