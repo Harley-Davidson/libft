@@ -39,8 +39,9 @@ void	clean_node_b(t_list **list, int i)
 
 	if (list == NULL || *list == NULL)
 		return ;
-	last_node = *list;
 	last_node = find_last_node_b(last_node);
+	if (last_node == NULL || i >= BUFFER_SIZE)
+        return;
 	clean_node = malloc(sizeof(t_list));
 	if (!clean_node)
 		return ;
@@ -51,11 +52,16 @@ void	clean_node_b(t_list **list, int i)
 		return ;
 	}
 	j = 0;
-	while (last_node->str[i])
+	while (last_node->str[i] && j < BUFFER_SIZE - i)
 		clean_node->str[j++] = last_node->str[i++];
 	clean_node->str[j] = '\0';
 	clean_node->next = NULL;
-	clean_list_b(list, clean_node);
+	if (clean_node->str[0])
+		clean_list_b(list, clean_node);
+	else
+    {
+        free(clean_node->str);
+        free(clean_node);
 }
 
 void	clean_list_b(t_list **list, t_list *clean_node)
