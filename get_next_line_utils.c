@@ -42,7 +42,14 @@ void	clean_node_b(t_list **list, int i)
 	last_node = *list;
 	last_node = find_last_node_b(last_node);
 	clean_node = malloc(sizeof(t_list));
+	if (!clean_node)
+		return ;
 	clean_node->str = malloc(BUFFER_SIZE - i + 1);
+	if (!clean_node->str)
+	{
+		free(clean_node);
+		return ;
+	}
 	j = 0;
 	while (last_node->str[i])
 		clean_node->str[j++] = last_node->str[i++];
