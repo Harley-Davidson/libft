@@ -54,10 +54,7 @@ void	add_list_b(t_list **list, char *buffer)
 
 	new_node = malloc(sizeof(t_list));
 	if (new_node == NULL)
-	{
-		free(buffer);
 		return ;
-	}
 	new_node->str = buffer;
 	new_node->next = NULL;
 	last_node = find_last_node_b(*(list));
