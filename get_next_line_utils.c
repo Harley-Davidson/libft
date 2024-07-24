@@ -31,40 +31,51 @@ int	has_new_line_char_b(t_list *list)
 	return (0);
 }
 
-void	clean_node_b(t_list **list, int i)
+void clean_node_b(t_list **list, int i)
 {
-	t_list	*clean_node;
-	t_list	*last_node;
-	int		j;
+    t_list *clean_node;
+    t_list *last_node;
+    int j;
 
-	if (list == NULL || *list == NULL)
-		return ;
-	last_node = *list;
-	last_node = find_last_node_b(last_node);
-	if (last_node == NULL || i >= BUFFER_SIZE)
-		return;
-	clean_node = malloc(sizeof(t_list));
-	if (!clean_node)
-		return ;
-	clean_node->str = malloc(BUFFER_SIZE - i + 1);
-	if (!clean_node->str)
-	{
-		free(clean_node);
-		return ;
-	}
-	j = 0;
-	while (last_node->str[i] && j < BUFFER_SIZE - i)
-		clean_node->str[j++] = last_node->str[i++];
-	clean_node->str[j] = '\0';
-	clean_node->next = NULL;
-	if (clean_node->str[0])
-		clean_list_b(list, clean_node);
-	else
-	{
-		free(clean_node->str);
-		free(clean_node);
-	}
+    if (list == NULL || *list == NULL)
+        return;
+
+    last_node = find_last_node_b(*list);
+
+    if (last_node == NULL || i >= BUFFER_SIZE) // Ensure valid indices
+        return;
+
+    clean_node = malloc(sizeof(t_list));
+    if (!clean_node) {
+        printf("Failed to allocate memory for clean_node\n");
+        return;
+    }
+
+    clean_node->str = malloc(BUFFER_SIZE - i + 1);
+    if (!clean_node->str) {
+        printf("Failed to allocate memory for clean_node->str\n");
+        free(clean_node);
+        return;
+    }
+
+    j = 0;
+    while (last_node->str[i] && j < BUFFER_SIZE - i)
+        clean_node->str[j++] = last_node->str[i++];
+
+    clean_node->str[j] = '\0';
+    clean_node->next = NULL;
+
+    printf("Adding clean_node with str: %s\n", clean_node->str);
+
+    if (clean_node->str[0])
+        clean_list_b(list, clean_node);
+    else
+    {
+        free(clean_node->str);
+        free(clean_node);
+    }
 }
+
 
 void	clean_list_b(t_list **list, t_list *clean_node)
 {
